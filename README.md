@@ -1,1 +1,1 @@
-# .github
+# Member Mypage Server
