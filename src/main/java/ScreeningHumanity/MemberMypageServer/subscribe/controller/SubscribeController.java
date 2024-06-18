@@ -7,15 +7,18 @@ import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseC
 import ScreeningHumanity.MemberMypageServer.global.common.token.DecodingToken;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeOutVo;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -54,5 +57,19 @@ public class SubscribeController {
         );
 
         return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 구독 여부 조회 api", description = "타 회원을 구독여부를 확인 합니다.")
+    @GetMapping("/subscribe")
+    private BaseResponse<SubscribeOutVo.IsSubscribe> isSubscribeMember(
+            @RequestParam("nickName") String nickName,
+            @RequestHeader(AUTHORIZATION) String accessToken
+    ){
+        SubscribeOutVo.IsSubscribe findData = subscribeService.isSubscribeMember(
+                decodingToken.getUuid(accessToken),
+                nickName
+        );
+
+        return new BaseResponse<>(findData);
     }
 }

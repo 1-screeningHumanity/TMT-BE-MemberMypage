@@ -10,11 +10,14 @@ import org.springframework.data.repository.query.Param;
 
 public interface SubscribeJpaRepository extends JpaRepository<SubscribeEntity, Long> {
 
-    Boolean existsBySubscriberUuidAndSubscribedToNickNameAndStatus(String subscriberUuid, String subscribedToNickName, SubscribeStatus status);
+    Boolean existsBySubscriberUuidAndSubscribedToNickNameAndStatus(String subscriberUuid,
+            String subscribedToNickName, SubscribeStatus status);
 
-    Optional<SubscribeEntity> findBySubscriberUuidAndSubscribedToNickName(String subscriberUuid, String subscribedToNickName);
+    Optional<SubscribeEntity> findBySubscriberUuidAndSubscribedToNickNameAndStatus(
+            String subscriberUuid, String subscribedToNickName, SubscribeStatus status);
 
     @Modifying
     @Query("UPDATE SubscribeEntity s SET s.status = :status WHERE s.subscriberUuid = :uuid AND s.subscribedToNickName = :nickName AND s.status != :status")
-    int updateSubscribeStatus(@Param("uuid") String uuid, @Param("nickName") String nickName, @Param("status") SubscribeStatus status);
+    int updateSubscribeStatus(@Param("uuid") String uuid, @Param("nickName") String nickName,
+            @Param("status") SubscribeStatus status);
 }

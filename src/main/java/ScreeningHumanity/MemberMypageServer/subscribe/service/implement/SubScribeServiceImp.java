@@ -12,6 +12,8 @@ import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeOutVo;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -90,4 +92,22 @@ public class SubScribeServiceImp implements SubscribeService {
             throw new CustomException(BaseResponseCode.NOT_EXIST_SUBSCRIBE_INFO_ERROR);
         }
     }
+
+    @Override
+    public SubscribeOutVo.IsSubscribe isSubscribeMember(String uuid, String nickName) {
+        Optional<SubscribeEntity> findData = subscribeJpaRepository.findBySubscriberUuidAndSubscribedToNickNameAndStatus(
+                uuid, nickName, SubscribeStatus.SUBSCRIBE);
+
+        if(findData.isEmpty()){
+            return SubscribeOutVo.IsSubscribe
+                    .builder()
+                    .isSubscribe(false)
+                    .build();
+        }
+        return SubscribeOutVo.IsSubscribe
+                .builder()
+                .isSubscribe(true)
+                .build();
+    }
+
 }
