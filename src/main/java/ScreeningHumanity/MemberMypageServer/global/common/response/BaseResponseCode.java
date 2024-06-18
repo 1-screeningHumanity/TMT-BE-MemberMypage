@@ -25,9 +25,10 @@ public enum BaseResponseCode {
     SUCCESS(HttpStatus.OK, true, 200, "요청 응답 성공"),
 
     // 구독 서비스
-    ALREADY_EXIST_SUBSCRIBE_MEMBER(HttpStatus.BAD_REQUEST, false, 5100, "이미 구독한 회원입니다."),
-    NOT_ENOUGH_MEMBER_CASH(HttpStatus.BAD_REQUEST, false, 5101, "회원의 보유중인 캐시가 부족합니다."),
-    CREATE_NEW_SUBSCRIBE_ERROR(HttpStatus.BAD_REQUEST, false, 5102, "회원 구독 중, 서버 에러가 발생 했습니다. 다시 시도 해 주세요."),
+    ALREADY_EXIST_SUBSCRIBE_MEMBER_ERROR(HttpStatus.BAD_REQUEST, false, 5100, "이미 구독한 회원입니다."),
+    SEARCH_MEMBER_CASH_ERROR(HttpStatus.BAD_REQUEST, false, 5101, "회원의 보유중인 캐시가 부족합니다."),
+    NOT_ENOUGH_MEMBER_CASH_ERROR(HttpStatus.BAD_REQUEST, false, 5102, "회원의 보유중인 캐시가 부족합니다."),
+    CREATE_NEW_SUBSCRIBE_ERROR(HttpStatus.BAD_REQUEST, false, 5103, "회원 구독 중, 서버 에러가 발생 했습니다. 다시 시도 해 주세요."),
 
     //공통 에러. 9000 ~ 9999
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 9000, "서버 에러"),

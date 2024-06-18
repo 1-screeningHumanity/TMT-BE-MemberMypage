@@ -24,14 +24,15 @@ public class SubscribeController {
     private final ModelMapper modelMapper;
     private final DecodingToken decodingToken;
 
-    @PostMapping
+    @PostMapping("/subscribe")
     private BaseResponse<Void> subscribeMember(
             @RequestBody SubscribeVo.Create requestVo,
             @RequestHeader(AUTHORIZATION) String accessToken
     ){
         subscribeService.createNewSubscribe(
                 decodingToken.getUuid(accessToken),
-                modelMapper.map(requestVo, SubscribeDto.Create.class)
+                modelMapper.map(requestVo, SubscribeDto.Create.class),
+                accessToken
         );
 
         return new BaseResponse<>();

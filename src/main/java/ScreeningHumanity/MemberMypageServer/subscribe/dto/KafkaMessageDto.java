@@ -11,6 +11,6 @@ public class KafkaMessageDto {
     @AllArgsConstructor
     public static class UseCash {
         private String uuid;
-        private String cash;
+        private Long cash;
     }
 }

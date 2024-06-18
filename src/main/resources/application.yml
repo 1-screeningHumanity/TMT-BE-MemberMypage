@@ -8,14 +8,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
 
 #RAMDOM PORT
 server:
-  port: 0
+  port: 9000
 
 #eureka
 eureka:
@@ -55,3 +55,11 @@ springdoc:
 #Token
 JWT:
   SECRET_KEY: sldkfjsoidfjwoeir12393012809vxcv89usdfkjn1203491iu0isdfl
+
+FEIGN_CLIENT:
+  PAYMENT:
+#    URL: ${PAYMENT_URL}
+    URL: 'https://screeninghumanity.shop/api/v1/payment'
+
+kafka:
+  bootstrap-server: ${KAFKA_SERVER}

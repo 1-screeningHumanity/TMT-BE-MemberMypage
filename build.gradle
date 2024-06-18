@@ -29,7 +29,7 @@ ext {
 }
 
 dependencies {
-//JPA
+	//JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	//Validation
@@ -72,6 +72,8 @@ dependencies {
 	//Kafka
 	implementation 'org.springframework.kafka:spring-kafka'
 
+	// Feign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }
 
 dependencyManagement {
