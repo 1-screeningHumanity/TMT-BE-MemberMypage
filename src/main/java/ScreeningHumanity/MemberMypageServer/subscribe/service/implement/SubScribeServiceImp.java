@@ -14,7 +14,6 @@ import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRep
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,24 +28,28 @@ public class SubScribeServiceImp implements SubscribeService {
 
     @Transactional
     @Override
-    public void createNewSubscribe(String uuid, SubscribeDto.Create requestDto,
-            String accessToken) {
+    public BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto, String accessToken) {
+        int updateCount = subscribeJpaRepository.updateSubscribeStatus(uuid, requestDto.getNickName(),
+                SubscribeStatus.SUBSCRIBE);
+        if(updateCount > 0){
+            return BaseResponseCode.UPDATE_SUBSCRIBE_SUCCESS;
+        }
 
-        if (Boolean.TRUE == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedToNickName(
+        if (Boolean.TRUE == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedToNickNameAndStatus(
                 uuid,
-                requestDto.getNickName())) {
+                requestDto.getNickName(),
+                SubscribeStatus.SUBSCRIBE
+        )) {
             throw new CustomException(BaseResponseCode.ALREADY_EXIST_SUBSCRIBE_MEMBER_ERROR);
         }
 
-        BaseResponse<PaymentGetCashVo> response;
         try {
-            response = providerCallFeignClient.searchMemberCash(accessToken);
+            BaseResponse<PaymentGetCashVo> response = providerCallFeignClient.searchMemberCash(accessToken);
+            if (response.result().getCash() < requestDto.getCash()) {
+                throw new CustomException(BaseResponseCode.NOT_ENOUGH_MEMBER_CASH_ERROR);
+            }
         } catch (Exception e) {
             throw new CustomException(BaseResponseCode.SEARCH_MEMBER_CASH_ERROR);
-        }
-
-        if (response.result().getCash() < requestDto.getCash()) {
-            throw new CustomException(BaseResponseCode.NOT_ENOUGH_MEMBER_CASH_ERROR);
         }
 
         //create new
@@ -60,7 +63,7 @@ public class SubScribeServiceImp implements SubscribeService {
         );
 
         try {
-            SendResult<String, String> stringStringSendResult = kafkaProducer.send(
+            kafkaProducer.send(
                     "subscribe-payment-changecash",
                     KafkaMessageDto.UseCash
                             .builder()
@@ -71,6 +74,20 @@ public class SubScribeServiceImp implements SubscribeService {
         } catch (Exception e) {
             subscribeJpaRepository.deleteById(savedData.getId());
             throw new CustomException(BaseResponseCode.CREATE_NEW_SUBSCRIBE_ERROR);
+        }
+
+        return BaseResponseCode.SUCCESS;
+    }
+
+    @Transactional
+    @Override
+    public void deleteSubscribe(String uuid, SubscribeDto.Delete requestDto) {
+        int updatedCount = subscribeJpaRepository.updateSubscribeStatus(
+                uuid, requestDto.getNickName(), SubscribeStatus.NO_SUBSCRIBE
+        );
+
+        if(updatedCount == 0){
+            throw new CustomException(BaseResponseCode.NOT_EXIST_SUBSCRIBE_INFO_ERROR);
         }
     }
 }
