@@ -1,8 +1,8 @@
 package ScreeningHumanity.MemberMypageServer.subscribe.service;
 
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.KafkaInputVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.in.KafkaInVo;
 
 public interface KafkaConsumerService {
 
-    void changeNickName(KafkaInputVo.ChangeNickName vo);
+    void changeNickName(KafkaInVo.ChangeNickName vo);
 }

@@ -7,8 +7,8 @@ import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseC
 import ScreeningHumanity.MemberMypageServer.global.common.token.DecodingToken;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeOutVo;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.in.SubscribeInVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class SubscribeController {
     @Operation(summary = "회원 구독 api", description = "타 회원을 구독 합니다.")
     @PostMapping("/subscribe")
     private BaseResponse<Void> subscribeMember(
-            @RequestBody SubscribeVo.Create requestVo,
+            @RequestBody SubscribeInVo.Create requestVo,
             @RequestHeader(AUTHORIZATION) String accessToken
     ){
         BaseResponseCode status = subscribeService.createNewSubscribe(
@@ -48,7 +48,7 @@ public class SubscribeController {
     @Operation(summary = "회원 구독 취소 api", description = "타 회원을 구독을 취소 합니다.")
     @DeleteMapping("/subscribe")
     private BaseResponse<Void> deleteSubscribeMember(
-            @RequestBody SubscribeVo.Delete requestVo,
+            @RequestBody SubscribeInVo.Delete requestVo,
             @RequestHeader(AUTHORIZATION) String accessToken
     ){
         subscribeService.deleteSubscribe(

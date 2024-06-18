@@ -1,7 +1,7 @@
 package ScreeningHumanity.MemberMypageServer.global.common.kafka;
 
 import ScreeningHumanity.MemberMypageServer.subscribe.service.KafkaConsumerService;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.KafkaInputVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.in.KafkaInVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +21,7 @@ public class KafkaConsumer {
     public void reservationStock(String kafkaMessage){
         log.info("kafka Message : {}", kafkaMessage);
 
-        KafkaInputVo.ChangeNickName vo = new KafkaInputVo.ChangeNickName();
+        KafkaInVo.ChangeNickName vo = new KafkaInVo.ChangeNickName();
         ObjectMapper mapper = new ObjectMapper();
         try{
             vo = mapper.readValue(kafkaMessage, new TypeReference<>() {});

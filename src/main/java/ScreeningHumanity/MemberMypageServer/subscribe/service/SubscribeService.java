@@ -2,7 +2,7 @@ package ScreeningHumanity.MemberMypageServer.subscribe.service;
 
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseCode;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeOutVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
 
 public interface SubscribeService {
 

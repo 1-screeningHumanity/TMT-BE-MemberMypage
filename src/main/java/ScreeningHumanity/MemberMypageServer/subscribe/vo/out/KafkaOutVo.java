@@ -1,10 +1,10 @@
-package ScreeningHumanity.MemberMypageServer.subscribe.dto;
+package ScreeningHumanity.MemberMypageServer.subscribe.vo.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-public class KafkaMessageDto {
+public class KafkaOutVo {
 
     @Getter
     @Builder

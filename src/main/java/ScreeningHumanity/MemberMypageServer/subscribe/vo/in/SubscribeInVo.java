@@ -1,11 +1,11 @@
-package ScreeningHumanity.MemberMypageServer.subscribe.vo;
+package ScreeningHumanity.MemberMypageServer.subscribe.vo.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class SubscribeVo {
+public class SubscribeInVo {
 
     @Getter
     @Builder

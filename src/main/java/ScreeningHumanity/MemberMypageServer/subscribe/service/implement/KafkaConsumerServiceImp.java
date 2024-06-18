@@ -2,7 +2,7 @@ package ScreeningHumanity.MemberMypageServer.subscribe.service.implement;
 
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.KafkaConsumerService;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.KafkaInputVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.in.KafkaInVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ public class KafkaConsumerServiceImp implements KafkaConsumerService {
 
     @Transactional
     @Override
-    public void changeNickName(KafkaInputVo.ChangeNickName vo) {
+    public void changeNickName(KafkaInVo.ChangeNickName vo) {
         subscribeJpaRepository.updateSubscribedToNickName(vo.getBeforeNickName(),
                 vo.getAfterNickName());
 

@@ -6,13 +6,13 @@ import ScreeningHumanity.MemberMypageServer.global.common.feignclinet.vo.Payment
 import ScreeningHumanity.MemberMypageServer.global.common.kafka.KafkaProducer;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponse;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseCode;
-import ScreeningHumanity.MemberMypageServer.subscribe.dto.KafkaMessageDto;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.KafkaOutVo;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
-import ScreeningHumanity.MemberMypageServer.subscribe.vo.SubscribeOutVo;
+import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +67,7 @@ public class SubScribeServiceImp implements SubscribeService {
         try {
             kafkaProducer.send(
                     "subscribe-payment-changecash",
-                    KafkaMessageDto.UseCash
+                    KafkaOutVo.UseCash
                             .builder()
                             .uuid(uuid)
                             .cash(requestDto.getCash())

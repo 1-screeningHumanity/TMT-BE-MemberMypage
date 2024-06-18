@@ -1,4 +1,4 @@
-package ScreeningHumanity.MemberMypageServer.subscribe.vo;
+package ScreeningHumanity.MemberMypageServer.subscribe.vo.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
