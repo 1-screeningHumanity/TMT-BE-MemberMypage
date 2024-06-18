@@ -2,6 +2,7 @@ package ScreeningHumanity.MemberMypageServer.subscribe.repository;
 
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,7 +23,8 @@ public interface SubscribeJpaRepository extends JpaRepository<SubscribeEntity, L
             @Param("status") SubscribeStatus status);
 
     @Modifying
-    @Query("UPDATE SubscribeEntity s SET s.subscribedToNickName = :afterNickName WHERE s.subscribedToNickName = :beforeNickName")
+    @Query("UPDATE SubscribeEntity s SET s.subscribedToNickName = :afterNickName, s.modifiedAt = :modifiedAt WHERE s.subscribedToNickName = :beforeNickName")
     void updateSubscribedToNickName(@Param("beforeNickName") String beforeNickName,
-            @Param("afterNickName") String afterNickName);
+            @Param("afterNickName") String afterNickName,
+            @Param("modifiedAt") LocalDateTime modifiedAt);
 }
