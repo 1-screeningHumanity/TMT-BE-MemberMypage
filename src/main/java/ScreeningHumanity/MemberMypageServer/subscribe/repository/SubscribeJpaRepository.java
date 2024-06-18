@@ -20,4 +20,9 @@ public interface SubscribeJpaRepository extends JpaRepository<SubscribeEntity, L
     @Query("UPDATE SubscribeEntity s SET s.status = :status WHERE s.subscriberUuid = :uuid AND s.subscribedToNickName = :nickName AND s.status != :status")
     int updateSubscribeStatus(@Param("uuid") String uuid, @Param("nickName") String nickName,
             @Param("status") SubscribeStatus status);
+
+    @Modifying
+    @Query("UPDATE SubscribeEntity s SET s.subscribedToNickName = :afterNickName WHERE s.subscribedToNickName = :beforeNickName")
+    void updateSubscribedToNickName(@Param("beforeNickName") String beforeNickName,
+            @Param("afterNickName") String afterNickName);
 }
