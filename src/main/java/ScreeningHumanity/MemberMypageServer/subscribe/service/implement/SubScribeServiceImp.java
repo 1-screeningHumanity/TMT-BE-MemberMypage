@@ -12,12 +12,8 @@ import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +45,7 @@ public class SubScribeServiceImp implements SubscribeService {
             throw new CustomException(BaseResponseCode.SEARCH_MEMBER_CASH_ERROR);
         }
 
-        if(response.result().getCash() < requestDto.getCash()){
+        if (response.result().getCash() < requestDto.getCash()) {
             throw new CustomException(BaseResponseCode.NOT_ENOUGH_MEMBER_CASH_ERROR);
         }
 
@@ -72,7 +68,7 @@ public class SubScribeServiceImp implements SubscribeService {
                             .cash(requestDto.getCash())
                             .build()
             ).get();
-        } catch (Exception e){
+        } catch (Exception e) {
             subscribeJpaRepository.deleteById(savedData.getId());
             throw new CustomException(BaseResponseCode.CREATE_NEW_SUBSCRIBE_ERROR);
         }

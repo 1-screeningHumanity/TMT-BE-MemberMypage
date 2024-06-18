@@ -15,13 +15,13 @@ spring:
 
 #RAMDOM PORT
 server:
-  port: 9000
+  port: 0
 
 #eureka
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: trade-server
+    hostname: member-mypage-server
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -58,8 +58,8 @@ JWT:
 
 FEIGN_CLIENT:
   PAYMENT:
-#    URL: ${PAYMENT_URL}
-    URL: 'https://screeninghumanity.shop/api/v1/payment'
+    URL: ${PAYMENT_URL}
+
 
 kafka:
   bootstrap-server: ${KAFKA_SERVER}
