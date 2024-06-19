@@ -12,6 +12,7 @@ public class SubscribeOutVo {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class IsSubscribe {
+
         private Boolean isSubscribe;
     }
 
@@ -20,6 +21,7 @@ public class SubscribeOutVo {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Follower {
+
         private String nickName;
     }
 
@@ -28,6 +30,7 @@ public class SubscribeOutVo {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Following {
+
         private String nickName;
     }
 }

@@ -12,6 +12,7 @@ public class SubscribeDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Create {
+
         private String subscriberNickName; //구독 하는 사람
         private String subscribedNickName; //구독 받는 사람
         private Long cash;
@@ -22,6 +23,7 @@ public class SubscribeDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Delete {
+
         private String nickName;
     }
 }

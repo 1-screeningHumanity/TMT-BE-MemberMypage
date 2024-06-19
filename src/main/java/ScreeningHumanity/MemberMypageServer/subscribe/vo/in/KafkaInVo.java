@@ -12,6 +12,7 @@ public class KafkaInVo {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ChangeNickName {
+
         private String beforeNickName;
         private String afterNickName;
     }

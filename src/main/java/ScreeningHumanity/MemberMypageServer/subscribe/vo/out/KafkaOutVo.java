@@ -10,6 +10,7 @@ public class KafkaOutVo {
     @Builder
     @AllArgsConstructor
     public static class UseCash {
+
         private String uuid;
         private Long cash;
     }

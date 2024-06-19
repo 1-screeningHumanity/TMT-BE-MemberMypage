@@ -8,14 +8,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+        show_sql: true
 
 #RAMDOM PORT
 server:
-  port: 0
+  port: 9000
 
 #eureka
 eureka:
@@ -23,8 +24,8 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     hostname: member-mypage-server
   client:
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: ${EUREKA_URl}
 

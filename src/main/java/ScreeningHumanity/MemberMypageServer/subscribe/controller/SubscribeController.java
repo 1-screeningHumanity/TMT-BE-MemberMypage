@@ -36,7 +36,7 @@ public class SubscribeController {
     private BaseResponse<Void> subscribeMember(
             @RequestBody SubscribeInVo.Create requestVo,
             @RequestHeader(AUTHORIZATION) String accessToken
-    ){
+    ) {
         BaseResponseCode status = subscribeService.createNewSubscribe(
                 decodingToken.getUuid(accessToken),
                 modelMapper.map(requestVo, SubscribeDto.Create.class),
@@ -51,7 +51,7 @@ public class SubscribeController {
     private BaseResponse<Void> deleteSubscribeMember(
             @RequestBody SubscribeInVo.Delete requestVo,
             @RequestHeader(AUTHORIZATION) String accessToken
-    ){
+    ) {
         subscribeService.deleteSubscribe(
                 decodingToken.getUuid(accessToken),
                 modelMapper.map(requestVo, SubscribeDto.Delete.class)
@@ -65,7 +65,7 @@ public class SubscribeController {
     private BaseResponse<SubscribeOutVo.IsSubscribe> isSubscribeMember(
             @RequestParam("nickName") String nickName,
             @RequestHeader(AUTHORIZATION) String accessToken
-    ){
+    ) {
         SubscribeOutVo.IsSubscribe findData = subscribeService.isSubscribeMember(
                 decodingToken.getUuid(accessToken),
                 nickName
@@ -79,7 +79,7 @@ public class SubscribeController {
     private BaseResponse<List<SubscribeOutVo.Follower>> searchFollower(
             @RequestHeader(AUTHORIZATION) String accessToken,
             @RequestParam("myNickName") String myNickName
-    ){
+    ) {
         List<SubscribeOutVo.Follower> findData = subscribeService.searchFollower(myNickName);
         return new BaseResponse<>(findData);
     }
@@ -89,7 +89,7 @@ public class SubscribeController {
     private BaseResponse<List<SubscribeOutVo.Following>> searchFollowing(
             @RequestHeader(AUTHORIZATION) String accessToken,
             @RequestParam("myNickName") String myNickName
-    ){
+    ) {
         List<SubscribeOutVo.Following> findData = subscribeService.searchFollowing(myNickName);
         return new BaseResponse<>(findData);
     }

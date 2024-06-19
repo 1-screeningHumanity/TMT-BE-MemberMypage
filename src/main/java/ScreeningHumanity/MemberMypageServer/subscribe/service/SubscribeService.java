@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface SubscribeService {
 
-    BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto, String accessToken);
+    BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto,
+            String accessToken);
 
     void deleteSubscribe(String uuid, SubscribeDto.Delete requestDto);
 

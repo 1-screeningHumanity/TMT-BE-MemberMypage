@@ -32,14 +32,17 @@ public class SubScribeServiceImp implements SubscribeService {
 
     @Transactional
     @Override
-    public BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto, String accessToken) {
-        int updateCount = subscribeJpaRepository.updateSubscribeStatus(uuid, requestDto.getSubscribedNickName(),
+    public BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto,
+            String accessToken) {
+        int updateCount = subscribeJpaRepository.updateSubscribeStatus(uuid,
+                requestDto.getSubscribedNickName(),
                 SubscribeStatus.SUBSCRIBE);
-        if(updateCount > 0){
+        if (updateCount > 0) {
             return BaseResponseCode.UPDATE_SUBSCRIBE_SUCCESS;
         }
 
-        if (Boolean.TRUE == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedNickNameAndStatus(
+        if (Boolean.TRUE
+                == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedNickNameAndStatus(
                 uuid,
                 requestDto.getSubscribedNickName(),
                 SubscribeStatus.SUBSCRIBE
@@ -48,7 +51,8 @@ public class SubScribeServiceImp implements SubscribeService {
         }
 
         try {
-            BaseResponse<PaymentGetCashVo> response = providerCallFeignClient.searchMemberCash(accessToken);
+            BaseResponse<PaymentGetCashVo> response = providerCallFeignClient.searchMemberCash(
+                    accessToken);
             if (response.result().getCash() < requestDto.getCash()) {
                 throw new CustomException(BaseResponseCode.NOT_ENOUGH_MEMBER_CASH_ERROR);
             }
@@ -91,7 +95,7 @@ public class SubScribeServiceImp implements SubscribeService {
                 uuid, requestDto.getNickName(), SubscribeStatus.NO_SUBSCRIBE
         );
 
-        if(updatedCount == 0){
+        if (updatedCount == 0) {
             throw new CustomException(BaseResponseCode.NOT_EXIST_SUBSCRIBE_INFO_ERROR);
         }
     }
@@ -101,7 +105,7 @@ public class SubScribeServiceImp implements SubscribeService {
         Optional<SubscribeEntity> findData = subscribeJpaRepository.findBySubscriberUuidAndSubscribedNickNameAndStatus(
                 uuid, nickName, SubscribeStatus.SUBSCRIBE);
 
-        if(findData.isEmpty()){
+        if (findData.isEmpty()) {
             return SubscribeOutVo.IsSubscribe
                     .builder()
                     .isSubscribe(false)
