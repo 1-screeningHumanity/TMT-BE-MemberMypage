@@ -24,7 +24,7 @@ public class SubscribeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     //구독 하는 사람의 uuid
     @Column(nullable = false)
