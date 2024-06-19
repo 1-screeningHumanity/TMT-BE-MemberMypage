@@ -11,6 +11,7 @@ import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.in.SubscribeInVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,6 +71,16 @@ public class SubscribeController {
                 nickName
         );
 
+        return new BaseResponse<>(findData);
+    }
+
+    @Operation(summary = "나를 구독한 사람 조회 api", description = "나를 구독한 사람 조회 API 호출")
+    @GetMapping("/subscribe/follower")
+    private BaseResponse<List<SubscribeOutVo.Follower>> searchFollower(
+            @RequestHeader(AUTHORIZATION) String accessToken,
+            @RequestParam("myNickName") String myNickName
+    ){
+        List<SubscribeOutVo.Follower> findData = subscribeService.searchFollower(myNickName);
         return new BaseResponse<>(findData);
     }
 }

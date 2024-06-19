@@ -26,13 +26,17 @@ public class SubscribeEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    //구독 하는 사람의 닉네임
-    @Column(name = "uuid", nullable = false)
+    //구독 하는 사람의 uuid
+    @Column(nullable = false)
     private String subscriberUuid;
 
+    //구독 하는 사람의 닉네임
+    @Column(nullable = false)
+    private String subscriberNickName;
+
     //구독 받는 사람의 닉네임
-    @Column(name = "nick_name", nullable = false)
-    private String subscribedToNickName;
+    @Column(nullable = false)
+    private String subscribedNickName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

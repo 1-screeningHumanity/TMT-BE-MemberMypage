@@ -14,4 +14,12 @@ public class SubscribeOutVo {
     public static class IsSubscribe {
         private Boolean isSubscribe;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Follower {
+        private String nickName;
+    }
 }

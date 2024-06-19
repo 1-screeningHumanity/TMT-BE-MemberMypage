@@ -13,7 +13,9 @@ import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,15 +33,15 @@ public class SubScribeServiceImp implements SubscribeService {
     @Transactional
     @Override
     public BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto, String accessToken) {
-        int updateCount = subscribeJpaRepository.updateSubscribeStatus(uuid, requestDto.getNickName(),
+        int updateCount = subscribeJpaRepository.updateSubscribeStatus(uuid, requestDto.getSubscribedNickName(),
                 SubscribeStatus.SUBSCRIBE);
         if(updateCount > 0){
             return BaseResponseCode.UPDATE_SUBSCRIBE_SUCCESS;
         }
 
-        if (Boolean.TRUE == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedToNickNameAndStatus(
+        if (Boolean.TRUE == subscribeJpaRepository.existsBySubscriberUuidAndSubscribedNickNameAndStatus(
                 uuid,
-                requestDto.getNickName(),
+                requestDto.getSubscribedNickName(),
                 SubscribeStatus.SUBSCRIBE
         )) {
             throw new CustomException(BaseResponseCode.ALREADY_EXIST_SUBSCRIBE_MEMBER_ERROR);
@@ -59,7 +61,8 @@ public class SubScribeServiceImp implements SubscribeService {
                 SubscribeEntity
                         .builder()
                         .subscriberUuid(uuid)
-                        .subscribedToNickName(requestDto.getNickName())
+                        .subscriberNickName(requestDto.getSubscriberNickName())
+                        .subscribedNickName(requestDto.getSubscribedNickName())
                         .status(SubscribeStatus.SUBSCRIBE)
                         .build()
         );
@@ -95,7 +98,7 @@ public class SubScribeServiceImp implements SubscribeService {
 
     @Override
     public SubscribeOutVo.IsSubscribe isSubscribeMember(String uuid, String nickName) {
-        Optional<SubscribeEntity> findData = subscribeJpaRepository.findBySubscriberUuidAndSubscribedToNickNameAndStatus(
+        Optional<SubscribeEntity> findData = subscribeJpaRepository.findBySubscriberUuidAndSubscribedNickNameAndStatus(
                 uuid, nickName, SubscribeStatus.SUBSCRIBE);
 
         if(findData.isEmpty()){
@@ -110,4 +113,16 @@ public class SubScribeServiceImp implements SubscribeService {
                 .build();
     }
 
+    @Override
+    public List<SubscribeOutVo.Follower> searchFollower(String myNickName) {
+        List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscribedNickNameAndStatus(
+                myNickName, SubscribeStatus.SUBSCRIBE);
+
+        return findData.stream()
+                .map(data -> SubscribeOutVo.Follower
+                        .builder()
+                        .nickName(data.getSubscriberNickName())
+                        .build()
+                ).collect(Collectors.toList());
+    }
 }
