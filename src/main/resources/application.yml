@@ -12,6 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+#        show_sql: true
 
 #RAMDOM PORT
 server:
@@ -21,7 +22,7 @@ server:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: trade-server
+    hostname: member-mypage-server
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -45,6 +46,7 @@ springdoc:
     doc-expansion: none
     tags-sorter: alpha
     operations-sorter: alpha
+    use-root-path: true
   api-docs:
     path: /api-docs/json
     groups:
@@ -55,3 +57,11 @@ springdoc:
 #Token
 JWT:
   SECRET_KEY: sldkfjsoidfjwoeir12393012809vxcv89usdfkjn1203491iu0isdfl
+
+FEIGN_CLIENT:
+  PAYMENT:
+    URL: ${PAYMENT_URL}
+
+
+kafka:
+  bootstrap-server: ${KAFKA_SERVER}
