@@ -14,4 +14,6 @@ public interface SubscribeService {
     SubscribeOutVo.IsSubscribe isSubscribeMember(String uuid, String nickName);
 
     List<SubscribeOutVo.Follower> searchFollower(String myNickName);
+
+    List<SubscribeOutVo.Following> searchFollowing(String myNickName);
 }

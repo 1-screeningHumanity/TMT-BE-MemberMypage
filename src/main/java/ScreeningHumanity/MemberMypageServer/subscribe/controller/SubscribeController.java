@@ -83,4 +83,14 @@ public class SubscribeController {
         List<SubscribeOutVo.Follower> findData = subscribeService.searchFollower(myNickName);
         return new BaseResponse<>(findData);
     }
+
+    @Operation(summary = "내가 구독한 사람 조회 api", description = "내가 구독한 사람 조회 API 호출")
+    @GetMapping("/subscribe/following")
+    private BaseResponse<List<SubscribeOutVo.Following>> searchFollowing(
+            @RequestHeader(AUTHORIZATION) String accessToken,
+            @RequestParam("myNickName") String myNickName
+    ){
+        List<SubscribeOutVo.Following> findData = subscribeService.searchFollowing(myNickName);
+        return new BaseResponse<>(findData);
+    }
 }

@@ -36,4 +36,6 @@ public interface SubscribeJpaRepository extends JpaRepository<SubscribeEntity, L
             @Param("modifiedAt") LocalDateTime modifiedAt);
 
     List<SubscribeEntity> findAllBySubscribedNickNameAndStatus(String subscribedNickName, SubscribeStatus status);
+
+    List<SubscribeEntity> findAllBySubscriberNickNameAndStatus(String subscriberNickName, SubscribeStatus status);
 }

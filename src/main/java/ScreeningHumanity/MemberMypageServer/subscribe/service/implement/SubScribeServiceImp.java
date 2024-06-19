@@ -125,4 +125,17 @@ public class SubScribeServiceImp implements SubscribeService {
                         .build()
                 ).collect(Collectors.toList());
     }
+
+    @Override
+    public List<SubscribeOutVo.Following> searchFollowing(String myNickName) {
+        List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscriberNickNameAndStatus(
+                myNickName, SubscribeStatus.SUBSCRIBE);
+
+        return findData.stream()
+                .map(data -> SubscribeOutVo.Following
+                        .builder()
+                        .nickName(data.getSubscribedNickName())
+                        .build()
+                ).collect(Collectors.toList());
+    }
 }
