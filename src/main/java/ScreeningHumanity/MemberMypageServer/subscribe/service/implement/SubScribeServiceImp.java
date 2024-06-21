@@ -90,9 +90,9 @@ public class SubScribeServiceImp implements SubscribeService {
 
     @Transactional
     @Override
-    public void deleteSubscribe(String uuid, SubscribeDto.Delete requestDto) {
+    public void deleteSubscribe(String uuid, String nickName) {
         int updatedCount = subscribeJpaRepository.updateSubscribeStatus(
-                uuid, requestDto.getNickName(), SubscribeStatus.NO_SUBSCRIBE
+                uuid, nickName, SubscribeStatus.NO_SUBSCRIBE
         );
 
         if (updatedCount == 0) {
