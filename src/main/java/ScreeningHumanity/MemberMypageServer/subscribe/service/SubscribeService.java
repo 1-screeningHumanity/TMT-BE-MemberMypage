@@ -10,7 +10,7 @@ public interface SubscribeService {
     BaseResponseCode createNewSubscribe(String uuid, SubscribeDto.Create requestDto,
             String accessToken);
 
-    void deleteSubscribe(String uuid, SubscribeDto.Delete requestDto);
+    void deleteSubscribe(String uuid, String nickName);
 
     SubscribeOutVo.IsSubscribe isSubscribeMember(String uuid, String nickName);
 
