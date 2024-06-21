@@ -49,12 +49,12 @@ public class SubscribeController {
     @Operation(summary = "회원 구독 취소 api", description = "타 회원을 구독을 취소 합니다.")
     @DeleteMapping("/subscribe")
     private BaseResponse<Void> deleteSubscribeMember(
-            @RequestBody SubscribeInVo.Delete requestVo,
+            @RequestParam("nickName") String nickName,
             @RequestHeader(AUTHORIZATION) String accessToken
     ) {
         subscribeService.deleteSubscribe(
                 decodingToken.getUuid(accessToken),
-                modelMapper.map(requestVo, SubscribeDto.Delete.class)
+                nickName
         );
 
         return new BaseResponse<>();
