@@ -4,6 +4,7 @@ import ScreeningHumanity.MemberMypageServer.bookmark.dto.BookmarkDto;
 import ScreeningHumanity.MemberMypageServer.bookmark.entity.BookmarkEntity;
 import ScreeningHumanity.MemberMypageServer.bookmark.repository.BookmarkJpaRepository;
 import ScreeningHumanity.MemberMypageServer.bookmark.service.BookmarkService;
+import ScreeningHumanity.MemberMypageServer.bookmark.vo.out.BookmarkOutVo;
 import ScreeningHumanity.MemberMypageServer.global.common.exception.CustomException;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseCode;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,16 @@ public class BookmarkServiceImp implements BookmarkService {
                 () -> new CustomException(BaseResponseCode.NOT_EXIST_BOOKMARK_STOCK_ERROR));
 
         bookmarkJpaRepository.delete(findData);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public BookmarkOutVo.IsBookmark isBookmarkStock(String uuid, String stockCode) {
+
+        Boolean isExist = bookmarkJpaRepository.existsByUuidAndStockCode(uuid, stockCode);
+        return BookmarkOutVo.IsBookmark
+                .builder()
+                .isBookmark(isExist)
+                .build();
     }
 }

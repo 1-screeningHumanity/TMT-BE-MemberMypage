@@ -8,8 +8,8 @@ public interface BookmarkService {
     void createNewBookmark(String uuid, BookmarkDto.Create requestDto);
 
     void deleteBookmark(String uuid, String stockCode);
-//
-//    BookmarkOutVo.IsBookmark isBookmarkStock();
+
+    BookmarkOutVo.IsBookmark isBookmarkStock(String uuid, String stockCode);
 //
 //    List<BookmarkOutVo.registeredBookmark> searchRegisteredBookmark();
 }

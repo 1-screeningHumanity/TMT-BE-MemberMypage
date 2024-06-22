@@ -5,6 +5,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import ScreeningHumanity.MemberMypageServer.bookmark.dto.BookmarkDto;
 import ScreeningHumanity.MemberMypageServer.bookmark.service.BookmarkService;
 import ScreeningHumanity.MemberMypageServer.bookmark.vo.in.BookmarkInVo;
+import ScreeningHumanity.MemberMypageServer.bookmark.vo.out.BookmarkOutVo;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponse;
 import ScreeningHumanity.MemberMypageServer.global.common.token.DecodingToken;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,7 +34,7 @@ public class BookmarkController {
     private BaseResponse<Void> bookmarkStock(
             @RequestHeader(AUTHORIZATION) String accessToken,
             @RequestBody BookmarkInVo.Create requestVo
-    ){
+    ) {
         String uuid = decodingToken.getUuid(accessToken);
         bookmarkService.createNewBookmark(
                 uuid,
@@ -47,7 +49,7 @@ public class BookmarkController {
     private BaseResponse<Void> deleteBookmarkStock(
             @RequestHeader(AUTHORIZATION) String accessToken,
             @RequestParam(name = "stockCode") String stockCode
-    ){
+    ) {
         String uuid = decodingToken.getUuid(accessToken);
         bookmarkService.deleteBookmark(
                 uuid,
@@ -55,5 +57,20 @@ public class BookmarkController {
         );
 
         return new BaseResponse<>();
+    }
+
+    @Operation(summary = "즐겨찾기 등록 여부 확인 api", description = "회원의 즐겨찾기 목록에서 해당 종목의 등록 여부를 확인합니다.")
+    @GetMapping("/bookmark")
+    private BaseResponse<BookmarkOutVo.IsBookmark> isBookmarkStock(
+            @RequestHeader(AUTHORIZATION) String accessToken,
+            @RequestParam(name = "stockCode") String stockCode
+    ) {
+        String uuid = decodingToken.getUuid(accessToken);
+        BookmarkOutVo.IsBookmark result = bookmarkService.isBookmarkStock(
+                uuid,
+                stockCode
+        );
+
+        return new BaseResponse<>(result);
     }
 }
