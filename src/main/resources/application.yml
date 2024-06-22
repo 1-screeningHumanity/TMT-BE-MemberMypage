@@ -6,6 +6,10 @@ spring:
     username: ${MEMBER_MYPAGE_DB_USER}
     password: ${MEMBER_MYPAGE_DB_PW}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    mongodb:
+      uri: ${READ_ONLY_DB_MONGO}
+
   jpa:
     hibernate:
       ddl-auto: update
