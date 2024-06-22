@@ -10,6 +10,7 @@ import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponse;
 import ScreeningHumanity.MemberMypageServer.global.common.token.DecodingToken;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,5 +73,17 @@ public class BookmarkController {
         );
 
         return new BaseResponse<>(result);
+    }
+
+    @Operation(summary = "즐겨찾기 리스트 조회 api", description = "회원의 즐겨찾기 목록을 조회합니다.")
+    @GetMapping("/bookmark/list")
+    private BaseResponse<List<BookmarkOutVo.registeredBookmark>> searchBookmarkList(
+            @RequestHeader(AUTHORIZATION) String accessToken
+    ) {
+        String uuid = decodingToken.getUuid(accessToken);
+        List<BookmarkOutVo.registeredBookmark> findList
+                = bookmarkService.searchRegisteredBookmark(uuid);
+
+        return new BaseResponse<>(findList);
     }
 }

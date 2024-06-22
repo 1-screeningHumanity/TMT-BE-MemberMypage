@@ -10,6 +10,6 @@ public interface BookmarkService {
     void deleteBookmark(String uuid, String stockCode);
 
     BookmarkOutVo.IsBookmark isBookmarkStock(String uuid, String stockCode);
-//
-//    List<BookmarkOutVo.registeredBookmark> searchRegisteredBookmark();
+
+    List<BookmarkOutVo.registeredBookmark> searchRegisteredBookmark(String uuid);
 }
