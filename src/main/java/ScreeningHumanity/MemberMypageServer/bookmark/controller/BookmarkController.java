@@ -11,9 +11,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,6 +37,21 @@ public class BookmarkController {
         bookmarkService.createNewBookmark(
                 uuid,
                 modelMapper.map(requestVo, BookmarkDto.Create.class)
+        );
+
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 종목 즐겨찾기 삭제 api", description = "회원의 즐겨찾기 목록에서 해당 종목을 삭제 합니다.")
+    @DeleteMapping("/bookmark")
+    private BaseResponse<Void> deleteBookmarkStock(
+            @RequestHeader(AUTHORIZATION) String accessToken,
+            @RequestParam(name = "stockCode") String stockCode
+    ){
+        String uuid = decodingToken.getUuid(accessToken);
+        bookmarkService.deleteBookmark(
+                uuid,
+                stockCode
         );
 
         return new BaseResponse<>();

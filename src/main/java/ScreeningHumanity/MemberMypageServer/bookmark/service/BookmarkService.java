@@ -7,7 +7,7 @@ import java.util.List;
 public interface BookmarkService {
     void createNewBookmark(String uuid, BookmarkDto.Create requestDto);
 
-//    void deleteBookmark();
+    void deleteBookmark(String uuid, String stockCode);
 //
 //    BookmarkOutVo.IsBookmark isBookmarkStock();
 //

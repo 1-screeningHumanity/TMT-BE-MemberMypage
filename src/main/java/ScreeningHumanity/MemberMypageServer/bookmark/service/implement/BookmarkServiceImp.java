@@ -20,7 +20,8 @@ public class BookmarkServiceImp implements BookmarkService {
     @Override
     public void createNewBookmark(String uuid, BookmarkDto.Create requestDto) {
 
-        if(Boolean.TRUE == bookmarkJpaRepository.existsByUuidAndStockCode(uuid, requestDto.getStockCode())){
+        if (Boolean.TRUE == bookmarkJpaRepository.existsByUuidAndStockCode(uuid,
+                requestDto.getStockCode())) {
             throw new CustomException(BaseResponseCode.ALREADY_EXIST_BOOKMARK_STOCK_ERROR);
         }
 
@@ -30,5 +31,16 @@ public class BookmarkServiceImp implements BookmarkService {
                 .stockCode(requestDto.getStockCode())
                 .stockName(requestDto.getStockName())
                 .build());
+    }
+
+    @Transactional
+    @Override
+    public void deleteBookmark(String uuid, String stockCode) {
+
+        BookmarkEntity findData = bookmarkJpaRepository.findByUuidAndStockCode(uuid,
+                stockCode).orElseThrow(
+                () -> new CustomException(BaseResponseCode.NOT_EXIST_BOOKMARK_STOCK_ERROR));
+
+        bookmarkJpaRepository.delete(findData);
     }
 }
