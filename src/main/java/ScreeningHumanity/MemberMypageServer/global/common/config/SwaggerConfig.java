@@ -43,7 +43,7 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("default Service 테스트")
+                .title("Member MyPage Service 테스트")
                 .description("Springdoc을 사용한 Swagger UI 테스트")
                 .version("1.0.0");
     }
