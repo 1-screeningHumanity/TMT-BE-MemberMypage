@@ -15,6 +15,7 @@ import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -122,10 +123,12 @@ public class SubScribeServiceImp implements SubscribeService {
         List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscribedNickNameAndStatus(
                 myNickName, SubscribeStatus.SUBSCRIBE);
 
+        AtomicLong indexId = new AtomicLong(1L);
         return findData.stream()
                 .map(data -> SubscribeOutVo.Follower
                         .builder()
                         .nickName(data.getSubscriberNickName())
+                        .id(indexId.getAndIncrement())
                         .build()
                 ).collect(Collectors.toList());
     }
@@ -135,10 +138,12 @@ public class SubScribeServiceImp implements SubscribeService {
         List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscriberNickNameAndStatus(
                 myNickName, SubscribeStatus.SUBSCRIBE);
 
+        AtomicLong indexId = new AtomicLong(1L);
         return findData.stream()
                 .map(data -> SubscribeOutVo.Following
                         .builder()
                         .nickName(data.getSubscribedNickName())
+                        .id(indexId.getAndIncrement())
                         .build()
                 ).collect(Collectors.toList());
     }
