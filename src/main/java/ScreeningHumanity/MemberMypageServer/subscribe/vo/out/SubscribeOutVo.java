@@ -22,6 +22,7 @@ public class SubscribeOutVo {
     @NoArgsConstructor
     public static class Follower {
 
+        private Long id;
         private String nickName;
     }
 
@@ -31,6 +32,7 @@ public class SubscribeOutVo {
     @NoArgsConstructor
     public static class Following {
 
+        private Long id;
         private String nickName;
     }
 }
