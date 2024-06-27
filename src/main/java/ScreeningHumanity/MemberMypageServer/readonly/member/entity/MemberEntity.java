@@ -1,4 +1,4 @@
-package ScreeningHumanity.MemberMypageServer.readonly.entity;
+package ScreeningHumanity.MemberMypageServer.readonly.member.entity;
 
 import ScreeningHumanity.MemberMypageServer.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
