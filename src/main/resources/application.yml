@@ -1,11 +1,6 @@
 spring:
   application:
     name: member-mypage-server
-  datasource:
-    url: ${MEMBER_MYPAGE_DB}
-    username: ${MEMBER_MYPAGE_DB_USER}
-    password: ${MEMBER_MYPAGE_DB_PW}
-    driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     mongodb:
       uri: ${READ_ONLY_DB_MONGO}
@@ -17,6 +12,17 @@ spring:
       hibernate:
         format_sql: true
 #        show_sql: true
+  first-datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: ${MEMBER_MYPAGE_DB}
+    username: ${MEMBER_MYPAGE_DB_USER}
+    password: ${MEMBER_MYPAGE_DB_PW}
+
+  second-datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://52.79.131.185:3330/memberdb
+    username: 'tmt_read_only'
+    password: 'tmtdb@1234'
 
 #RAMDOM PORT
 server:
