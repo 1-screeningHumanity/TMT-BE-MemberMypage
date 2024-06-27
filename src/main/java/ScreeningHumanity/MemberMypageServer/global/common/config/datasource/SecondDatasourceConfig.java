@@ -1,4 +1,4 @@
-package ScreeningHumanity.MemberMypageServer.global.common.config;
+package ScreeningHumanity.MemberMypageServer.global.common.config.datasource;
 
 import javax.sql.DataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @EnableJpaRepositories(
         basePackages = {
-                "ScreeningHumanity.MemberMypageServer.readonly"
+                "ScreeningHumanity.MemberMypageServer.readonly.member"
         },
         entityManagerFactoryRef = "secondDatabaseEntityManagerFactory",
         transactionManagerRef = "secondDatabaseTransactionManager"
@@ -26,7 +26,7 @@ public class SecondDatasourceConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(secondDatabaseDataSource());
         em.setPackagesToScan(
-                "ScreeningHumanity.MemberMypageServer.readonly"
+                "ScreeningHumanity.MemberMypageServer.readonly.member"
         );
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         return em;

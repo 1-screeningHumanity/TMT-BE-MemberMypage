@@ -1,6 +1,6 @@
-package ScreeningHumanity.MemberMypageServer.readonly.repository;
+package ScreeningHumanity.MemberMypageServer.readonly.member.repository;
 
-import ScreeningHumanity.MemberMypageServer.readonly.entity.MemberEntity;
+import ScreeningHumanity.MemberMypageServer.readonly.member.entity.MemberEntity;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package ScreeningHumanity.MemberMypageServer.global.common.config;
+package ScreeningHumanity.MemberMypageServer.global.common.config.datasource;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

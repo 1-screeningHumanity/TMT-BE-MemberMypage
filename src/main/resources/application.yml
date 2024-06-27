@@ -20,9 +20,14 @@ spring:
 
   second-datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    jdbc-url: ${READ_ONLY_DB}
-    username: ${READ_ONLY_DB_USER}
-    password: ${READ_ONLY_DB_PW}
+    jdbc-url: ${MEMBER_READ_ONLY_DB}
+    username: ${MEMBER_READ_ONLY_DB_USER}
+    password: ${MEMBER_READ_ONLY_DB_PW}
+  third-datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: ${RANKING_READ_ONLY_DB}
+    username: ${RANKING_READ_ONLY_DB_USER}
+    password: ${RANKING_READ_ONLY_DB_PW}
 
 #RAMDOM PORT
 server:
