@@ -26,4 +26,15 @@ public class SubscribeDto {
 
         private String nickName;
     }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SubscribeNotification {
+        private String title;
+        private String body;
+        private String uuid;
+        private String notificationLogTime;
+    }
 }
