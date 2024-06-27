@@ -27,15 +27,15 @@ public class SubscribeEntity extends BaseEntity {
     private Long id;
 
     //구독 하는 사람의 uuid
-    @Column(nullable = false)
+    @Column(name = "subscriber_uuid", nullable = false)
     private String subscriberUuid;
 
     //구독 하는 사람의 닉네임
-    @Column(nullable = false)
+    @Column(name = "subscriber_nick_name", nullable = false)
     private String subscriberNickName;
 
     //구독 받는 사람의 닉네임
-    @Column(nullable = false)
+    @Column(name = "subscribed_nick_name", nullable = false)
     private String subscribedNickName;
 
     @Enumerated(EnumType.STRING)

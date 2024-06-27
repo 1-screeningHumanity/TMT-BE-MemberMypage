@@ -6,6 +6,8 @@ import ScreeningHumanity.MemberMypageServer.global.common.feignclinet.vo.Payment
 import ScreeningHumanity.MemberMypageServer.global.common.kafka.KafkaProducer;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponse;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseCode;
+import ScreeningHumanity.MemberMypageServer.readonly.entity.MemberEntity;
+import ScreeningHumanity.MemberMypageServer.readonly.repository.MemberJpaReadOnlyRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.KafkaOutVo;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
@@ -13,6 +15,7 @@ import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeStatus;
 import ScreeningHumanity.MemberMypageServer.subscribe.repository.SubscribeJpaRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.service.SubscribeService;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.SubscribeOutVo;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,6 +33,7 @@ public class SubScribeServiceImp implements SubscribeService {
     private final SubscribeJpaRepository subscribeJpaRepository;
     private final KafkaProducer kafkaProducer;
     private final ProviderCallFeignClient providerCallFeignClient;
+    private final MemberJpaReadOnlyRepository memberJpaReadOnlyRepository;
 
     @Transactional
     @Override
@@ -39,6 +43,7 @@ public class SubScribeServiceImp implements SubscribeService {
                 requestDto.getSubscribedNickName(),
                 SubscribeStatus.SUBSCRIBE);
         if (updateCount > 0) {
+            notificationToSubscribedMember(requestDto.getSubscribedNickName(), requestDto.getSubscriberNickName());
             return BaseResponseCode.UPDATE_SUBSCRIBE_SUCCESS;
         }
 
@@ -85,6 +90,8 @@ public class SubScribeServiceImp implements SubscribeService {
             subscribeJpaRepository.deleteById(savedData.getId());
             throw new CustomException(BaseResponseCode.CREATE_NEW_SUBSCRIBE_ERROR);
         }
+
+        notificationToSubscribedMember(requestDto.getSubscribedNickName(), requestDto.getSubscriberNickName());
 
         return BaseResponseCode.SUCCESS;
     }
@@ -146,5 +153,20 @@ public class SubScribeServiceImp implements SubscribeService {
                         .id(indexId.getAndIncrement())
                         .build()
                 ).collect(Collectors.toList());
+    }
+
+    private void notificationToSubscribedMember(String subscribedNickName, String subscriberNickName) {
+        MemberEntity findData = memberJpaReadOnlyRepository.findAllByNickname(
+                subscribedNickName).orElseThrow(
+                () -> new CustomException(BaseResponseCode.NOT_EXIST_SUBSCRIBED_NICKNAME_ERROR));
+
+        SubscribeDto.SubscribeNotification data = SubscribeDto.SubscribeNotification
+                .builder()
+                .title(subscriberNickName + "님이 회원님을 구독 하였습니다.")
+                .body(subscriberNickName + "님이 회원님을 구독 하였습니다.")
+                .uuid(findData.getUuid())
+                .notificationLogTime(LocalDateTime.now().toString())
+                .build();
+        kafkaProducer.send("trade-notification-alarm", data);
     }
 }

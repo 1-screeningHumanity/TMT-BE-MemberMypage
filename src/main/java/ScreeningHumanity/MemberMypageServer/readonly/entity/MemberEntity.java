@@ -1,5 +1,7 @@
 package ScreeningHumanity.MemberMypageServer.readonly.entity;
 
+import ScreeningHumanity.MemberMypageServer.global.common.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,19 +19,40 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "member")
-public class MemberEntity {
+public class MemberEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long member_id; //PK
+    @Column(name = "member_id")
+    private Long memberId; //PK
+
+    @Column(name = "name")
     private String name; //이름
+
+    @Column(name = "password")
     private String password; //비밀번호
+
+    @Column(name = "nickname")
     private String nickname; //닉네임
-    private String paying_password; //결제 PW
+
+    @Column(name = "paying_password")
+    private String payingPassword; //결제 PW
+
+    @Column(name = "uuid")
     private String uuid; //uuid
+
+    @Column(name = "status")
     private String status; //회원상태
+
+    @Column(name = "grade")
     private String grade; //회원등급
-    private String phone_number; //전화번호
-    private LocalDateTime created_at;
-    private LocalDateTime modified_at;
+
+    @Column(name = "phone_number")
+    private String phoneNumber; //전화번호
+
+    @Column(name = "member_id")
+    private LocalDateTime createdAt;
+
+    @Column(name = "member_id")
+    private LocalDateTime modifiedAt;
 }
