@@ -6,8 +6,10 @@ import ScreeningHumanity.MemberMypageServer.global.common.feignclinet.vo.Payment
 import ScreeningHumanity.MemberMypageServer.global.common.kafka.KafkaProducer;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponse;
 import ScreeningHumanity.MemberMypageServer.global.common.response.BaseResponseCode;
-import ScreeningHumanity.MemberMypageServer.readonly.entity.MemberEntity;
-import ScreeningHumanity.MemberMypageServer.readonly.repository.MemberJpaReadOnlyRepository;
+import ScreeningHumanity.MemberMypageServer.readonly.member.entity.MemberEntity;
+import ScreeningHumanity.MemberMypageServer.readonly.member.repository.MemberJpaReadOnlyRepository;
+import ScreeningHumanity.MemberMypageServer.readonly.ranking.entity.AssetRanking;
+import ScreeningHumanity.MemberMypageServer.readonly.ranking.repository.AssetRankingJpaReadOnlyRepository;
 import ScreeningHumanity.MemberMypageServer.subscribe.vo.out.KafkaOutVo;
 import ScreeningHumanity.MemberMypageServer.subscribe.dto.SubscribeDto;
 import ScreeningHumanity.MemberMypageServer.subscribe.entity.SubscribeEntity;
@@ -34,6 +36,7 @@ public class SubScribeServiceImp implements SubscribeService {
     private final KafkaProducer kafkaProducer;
     private final ProviderCallFeignClient providerCallFeignClient;
     private final MemberJpaReadOnlyRepository memberJpaReadOnlyRepository;
+    private final AssetRankingJpaReadOnlyRepository assetRankingJpaReadOnlyRepository;
 
     @Transactional
     @Override
@@ -130,12 +133,18 @@ public class SubScribeServiceImp implements SubscribeService {
         List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscribedNickNameAndStatus(
                 myNickName, SubscribeStatus.SUBSCRIBE);
 
+        List<AssetRanking> findRankingData = assetRankingJpaReadOnlyRepository.findRankingsByNicknameIn(
+                findData.stream().map(SubscribeEntity::getSubscriberNickName)
+                        .collect(Collectors.toList())
+        );
+
         AtomicLong indexId = new AtomicLong(1L);
-        return findData.stream()
+        return findRankingData.stream()
                 .map(data -> SubscribeOutVo.Follower
                         .builder()
-                        .nickName(data.getSubscriberNickName())
+                        .nickName(data.getNickname())
                         .id(indexId.getAndIncrement())
+                        .ranking(data.getRanking())
                         .build()
                 ).collect(Collectors.toList());
     }
@@ -145,11 +154,17 @@ public class SubScribeServiceImp implements SubscribeService {
         List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscriberNickNameAndStatus(
                 myNickName, SubscribeStatus.SUBSCRIBE);
 
+        List<AssetRanking> findRankingData = assetRankingJpaReadOnlyRepository.findRankingsByNicknameIn(
+                findData.stream().map(SubscribeEntity::getSubscribedNickName)
+                        .collect(Collectors.toList())
+        );
+
         AtomicLong indexId = new AtomicLong(1L);
-        return findData.stream()
+        return findRankingData.stream()
                 .map(data -> SubscribeOutVo.Following
                         .builder()
-                        .nickName(data.getSubscribedNickName())
+                        .nickName(data.getNickname())
+                        .ranking(data.getRanking())
                         .id(indexId.getAndIncrement())
                         .build()
                 ).collect(Collectors.toList());

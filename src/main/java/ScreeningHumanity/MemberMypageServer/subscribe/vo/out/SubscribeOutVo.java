@@ -24,6 +24,7 @@ public class SubscribeOutVo {
 
         private Long id;
         private String nickName;
+        private Long ranking;
     }
 
     @Getter
@@ -34,5 +35,6 @@ public class SubscribeOutVo {
 
         private Long id;
         private String nickName;
+        private Long ranking;
     }
 }
