@@ -31,6 +31,7 @@ public enum BaseResponseCode {
     NOT_ENOUGH_MEMBER_CASH_ERROR(HttpStatus.BAD_REQUEST, false, 5102, "회원의 보유중인 캐시가 부족합니다."),
     CREATE_NEW_SUBSCRIBE_ERROR(HttpStatus.BAD_REQUEST, false, 5103, "회원 구독 중, 서버 에러가 발생 했습니다. 다시 시도 해 주세요."),
     NOT_EXIST_SUBSCRIBE_INFO_ERROR(HttpStatus.BAD_REQUEST, false, 5104, "구독중인 회원이 아닙니다."),
+    NOT_EXIST_SUBSCRIBED_NICKNAME_ERROR(HttpStatus.BAD_REQUEST, false, 5105, "구독받는 사람의 회원 정보가 이상합니다."),
 
     ALREADY_EXIST_BOOKMARK_STOCK_ERROR(HttpStatus.BAD_REQUEST, false, 5000, "이미 즐겨찾기된 종목 입니다."),
     NOT_EXIST_BOOKMARK_STOCK_ERROR(HttpStatus.BAD_REQUEST, false, 5001, "즐겨찾기 등록 되어 있지 않은 종목 입니다."),
