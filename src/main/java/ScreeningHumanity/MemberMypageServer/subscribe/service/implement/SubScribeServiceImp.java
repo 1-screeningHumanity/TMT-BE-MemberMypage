@@ -154,11 +154,17 @@ public class SubScribeServiceImp implements SubscribeService {
         List<SubscribeEntity> findData = subscribeJpaRepository.findAllBySubscriberNickNameAndStatus(
                 myNickName, SubscribeStatus.SUBSCRIBE);
 
+        List<AssetRanking> findRankingData = assetRankingJpaReadOnlyRepository.findRankingsByNicknameIn(
+                findData.stream().map(SubscribeEntity::getSubscribedNickName)
+                        .collect(Collectors.toList())
+        );
+
         AtomicLong indexId = new AtomicLong(1L);
-        return findData.stream()
+        return findRankingData.stream()
                 .map(data -> SubscribeOutVo.Following
                         .builder()
-                        .nickName(data.getSubscribedNickName())
+                        .nickName(data.getNickname())
+                        .ranking(data.getRanking())
                         .id(indexId.getAndIncrement())
                         .build()
                 ).collect(Collectors.toList());
